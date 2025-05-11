@@ -30,7 +30,7 @@ consumidor.ReceivedAsync += async (sender, eventArgs) =>
 };
 uint qtd = await channel.MessageCountAsync("mensagem");
 
-Console.WriteLine($"Quantidade de Mensagens: {qtd}");
+Console.WriteLine($"Quantidade de Mensagens total no servidor: {qtd}");
 if (qtd > 0)
     await channel.BasicConsumeAsync("mensagem", false, consumidor);
 
