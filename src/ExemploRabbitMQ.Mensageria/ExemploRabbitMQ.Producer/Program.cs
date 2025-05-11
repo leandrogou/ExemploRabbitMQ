@@ -16,7 +16,7 @@ await channel.QueueDeclareAsync(
 
 for (int i = 0; i < 10; i++)
 {
-    var mensagem = $"{DateTime.UtcNow} - {Guid.NewGuid()} - Nova Mensagem";
+    var mensagem = $"{DateTime.UtcNow} - {Guid.NewGuid()} - Nova Mensagem Prioridade 1";
     var body = Encoding.UTF8.GetBytes(mensagem);
 
     //Realizando uma publicação basica da mensagem no RabbitMQ
@@ -24,11 +24,35 @@ for (int i = 0; i < 10; i++)
         exchange: string.Empty,
         routingKey: "mensagem",
         mandatory: true,
-        basicProperties: new BasicProperties 
-        { 
-            Persistent = true, 
-            AppId = "14123", 
-            UserId = "guest" },
+        basicProperties: new BasicProperties
+        {
+            Persistent = true,
+            AppId = "14123",
+            Priority = 1
+        },
+        body: body);
+
+    Console.WriteLine($"Enviando: {mensagem}");
+
+    await Task.Delay(2000);
+}
+
+for (int i = 0; i < 10; i++)
+{
+    var mensagem = $"{DateTime.UtcNow} - {Guid.NewGuid()} - Nova Mensagem Prioridade 8";
+    var body = Encoding.UTF8.GetBytes(mensagem);
+
+    //Realizando uma publicação basica da mensagem no RabbitMQ
+    await channel.BasicPublishAsync(
+        exchange: string.Empty,
+        routingKey: "mensagem",
+        mandatory: true,
+        basicProperties: new BasicProperties
+        {
+            Persistent = true,
+            AppId = "14123",
+            Priority = 8,
+        },
         body: body);
 
     Console.WriteLine($"Enviando: {mensagem}");

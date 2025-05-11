@@ -32,6 +32,6 @@ uint qtd = await channel.MessageCountAsync("mensagem");
 
 Console.WriteLine($"Quantidade de Mensagens: {qtd}");
 if (qtd > 0)
-    await channel.BasicConsumeAsync("mensagem", false, consumidor);
+    await channel.BasicConsumeAsync("mensagem",false, consumidor);
 
 Console.ReadLine();
